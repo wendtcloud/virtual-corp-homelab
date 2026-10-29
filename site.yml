@@ -1,0 +1,6 @@
+- name: Konfiguracja srv-deb
+  hosts: servers
+  roles:
+    - ssh_hardening
+    - docker
+    - monitoring

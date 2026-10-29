@@ -1,0 +1,5 @@
+```text
+*.retry
+.ansible/
+secrets.yml # if storing unencrypted secrets locally
+.venv/

@@ -1,0 +1,9 @@
+- name: Konfiguracja sshd (drop-in)
+  ansible.builtin.copy:
+    src: 00-hardening.conf
+    dest: /etc/ssh/sshd_config.d/00-hardening.conf
+    owner: root
+    group: root
+    mode: '0644'
+    validate: /usr/sbin/sshd -t -f %s
+  notify: restart ssh

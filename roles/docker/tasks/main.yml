@@ -1,0 +1,40 @@
+- name: Zależności
+  ansible.builtin.apt:
+    name: [ca-certificates, curl]
+    state: present
+    update_cache: true
+
+- name: Katalog na klucze apt
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Klucz GPG Dockera
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: Repozytorium Dockera
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable'
+    filename: docker
+
+- name: Instalacja Dockera
+  ansible.builtin.apt:
+    name: [docker-ce, docker-ce-cli, containerd.io, docker-compose-plugin]
+    state: present
+    update_cache: true
+
+- name: Użytkownik admin w grupie docker
+  ansible.builtin.user:
+    name: admin
+    groups: docker
+    append: true
+
+- name: Docker uruchomiony i włączony
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true

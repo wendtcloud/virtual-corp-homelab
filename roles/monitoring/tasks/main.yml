@@ -1,0 +1,23 @@
+- name: Katalog stosu
+  ansible.builtin.file:
+    path: /opt/monitoring
+    state: directory
+    mode: '0755'
+
+- name: Pliki konfiguracyjne
+  ansible.builtin.copy:
+    src: '{{ item }}'
+    dest: '/opt/monitoring/{{ item }}'
+    mode: '0644'
+  loop:
+    - docker-compose.yml
+    - prometheus.yml
+    - datasource.yml
+
+- name: Uruchomienie stosu
+  ansible.builtin.command: docker compose up -d
+  args:
+    chdir: /opt/monitoring
+  register: compose
+  changed_when: >-
+    'Created' in compose.stderr or 'Started' in compose.stderr
