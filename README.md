@@ -57,9 +57,9 @@ The playbook is idempotent, so a second run should report `changed=0`.
 
 ## Screenshots
 
-![Proxmox](docs/proxmox.png)
-![Grafana](docs/grafana.png)
-![WireGuard](docs/wireguard.png)
+![Proxmox](./proxmox.png)
+![Grafana](./grafana.png)
+![WireGuard](./wireguard.png)
 
 ## Notes
 
